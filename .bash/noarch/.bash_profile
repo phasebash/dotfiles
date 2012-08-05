@@ -1,5 +1,5 @@
 # 
-# phasebash -- noarch/.bash_profile
+# phasebash -- ~/.bash/noarch/.bash_profile
 # 
 
 # Get the aliases and functions
@@ -28,7 +28,7 @@ export PATH
 
 # thanks to Andreas D @ OCLC for this one.
 function parse_git_branch_and_add_brackets {
-          git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
 }
 
 # add the current git branch name to PS1 if available
