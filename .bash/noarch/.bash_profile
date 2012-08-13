@@ -27,10 +27,10 @@ export PATH
 #
 
 # thanks to Andreas D @ OCLC for this one.
-function parse_git_branch_and_add_brackets {
+function gitbranchname() {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
 }
 
 # add the current git branch name to PS1 if available
-export PS1="\h:\W \u\[\033[0;32m\]\$(parse_git_branch_and_add_brackets) \[\033[0m\]\$ "
 
+export PS1="\h:\W \u\[\033[0;32m\]\$(gitbranchname) \[\033[0m\]\$ "
