@@ -13,11 +13,6 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin
 # add all local bin dirs to the path.  i've not yet decided if this is cool or dangerous
 for f in $HOME/local/*/bin ; do PATH=$PATH:$HOME/local/$f/bin ; done
 
-# set the current java distribution by symlink in $HOME/jdk
-if [ -d $HOME/local/jdk ]; then
-    export JAVA_HOME=$HOME/local/jdk
-    export JDK_HOME=$JAVA_HOME
-fi
 
 # set our path
 export PATH
