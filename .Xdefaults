@@ -1,0 +1,3 @@
+URxvt*font:         xft:Monospace:pixelsize=11
+URxvt*background:   #000000
+URxvt*foreground:   #FFFFFF
