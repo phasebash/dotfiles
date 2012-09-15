@@ -4,6 +4,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 syntax on
+set encoding=utf-8
 " set listchars=tab:▸\ ,eol:¬
 
 if has ("autocmnd")

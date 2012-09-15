@@ -2,6 +2,11 @@
 # phasebash -- ~/.bash/noarch/.bash_profile
 # 
 
+# import global profile
+if [ -f /etc/profile ]; then
+   source /etc/profile
+fi
+
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
@@ -19,7 +24,7 @@ if [ -d $HOME/local/jdk ]; then
     export JDK_HOME=$JAVA_HOME
 fi
 
-# set our path
+# finally set our path
 export PATH
 
 #
@@ -32,5 +37,4 @@ function gitbranchname() {
 }
 
 # add the current git branch name to PS1 if available
-
-export PS1="\h:\W \u\[\033[0;32m\]\$(gitbranchname) \[\033[0m\]\$ "
+# export PS1="\h:\W \u\[\033[0;32m\]`gitbranchname` \[\033[0m\]\$ "
