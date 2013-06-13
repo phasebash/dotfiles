@@ -16,7 +16,8 @@ fi
 PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
 # add all local bin dirs to the path.  i've not yet decided if this is cool or dangerous
-for f in $HOME/local/*/bin ; do PATH=$PATH:$f ; done
+for f in $HOME/local/*/bin ; do PATH=$f:$PATH ; done
+for f in $HOME/.local/*/bin ; do PATH=$f:$PATH ; done
 
 
 # finally set our path
