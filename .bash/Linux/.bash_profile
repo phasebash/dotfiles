@@ -11,5 +11,6 @@ fi
 if [ -d $HOME/local/jdk ]; then
     export JAVA_HOME=$HOME/local/jdk
     export JDK_HOME=$JAVA_HOME
+    export PATH=$JAVA_HOME/bin:$PATH
 fi
 

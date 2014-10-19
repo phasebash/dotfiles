@@ -1,4 +1,4 @@
-Server.program ="/usr/bin/supernova -S 96000";
+Server.program ="/usr/bin/supernova -S 48000";
 
 "SC_JACK_DEFAULT_OUTPUTS".setenv(
     "firewire_pcm:0001f20000012db2_pbk_Phones-L_out,firewire_pcm:0001f20000012db2_pbk_Phones-R_out"
