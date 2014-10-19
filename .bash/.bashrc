@@ -1,6 +1,6 @@
-if [ -f /home/${USER}/.bash/`uname`/.bashrc ]; then
-    . /home/${USER}/.bash/`uname`/.bashrc
+if [ -f ${HOME}/.bash/`uname`/.bashrc ]; then
+    . ${HOME}/.bash/`uname`/.bashrc
 fi
                 
-. /home/${USER}/.bash/noarch/.bashrc
+. ${HOME}/.bash/noarch/.bashrc
 

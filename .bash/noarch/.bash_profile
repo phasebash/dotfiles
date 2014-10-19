@@ -15,7 +15,7 @@ fi
 # User specific environment and startup programs
 PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
-# add all local bin dirs to the path.  i've not yet decided if this is cool or dangerous
+# add all local apps bin dirs to path
 for f in $HOME/local/*/bin ; do PATH=$f:$PATH ; done
 
 
