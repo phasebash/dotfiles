@@ -14,6 +14,7 @@ fi
 
 if [ -f /Users/${USER}/.bash/noarch/.bash_profile ]; then
     . /Users/${USER}/.bash/noarch/.bash_profile 
+fi
 
 if [ -f ${HOME}/.bash_profile_local ]; then
     . ${HOME}/.bash_profile_local
