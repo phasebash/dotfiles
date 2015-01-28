@@ -1,0 +1,6 @@
+[user]
+	name = Brandon Zeeb
+	email = phasebash@gmail.com
+
+[alias]
+    graph = log --graph --all --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %Cgreen %an, %ar%Creset'
