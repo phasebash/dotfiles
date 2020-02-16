@@ -1,3 +1,4 @@
+
 set smartindent
 set tabstop=4
 set shiftwidth=4
@@ -9,6 +10,11 @@ set listchars=tab:▸\ ,eol:¬
 set list
 set number
 
+" jj is the new esc
+:imap jj <Esc>
+
+colorscheme elflord
+
 " Enable file type detection
 filetype on
 
@@ -18,4 +24,14 @@ filetype on
 autocmd FileType make     set noexpandtab shiftwidth=8
 autocmd FileType automake set noexpandtab shiftwidth=8
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+
+nmap <silent> ,t :TestNearest<CR>
+nmap <silent> ,T :TestFile<CR>
+nmap <silent> ,a :TestSuite<CR>
+nmap <silent> ,l :TestLast<CR>
+nmap <silent> ,g :TestVisit<CR>
+
+nmap <leader>g :NERDTreeToggle<CR>
+nmap <leader>G :NERDTreeFind<CR>
+
 
