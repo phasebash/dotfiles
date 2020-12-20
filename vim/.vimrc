@@ -12,13 +12,26 @@ set number
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'vim-test/vim-test'
+call plug#begin()
+    Plug 'preservim/nerdtree'
+    Plug 'vim-test/vim-test'
 
-Plug 'rust-lang/rust.vim'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'rust-lang/rust.vim'
+    Plug 'prabirshrestha/async.vim'
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+    Plug 'tpope/vim-fugitive'
+call plug#end()
+
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
 
 " jj is the new esc
 :imap jj <Esc>
