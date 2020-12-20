@@ -11,5 +11,14 @@ fpath=(~/.zsh $fpath)
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:$HOME/local/bin"
 
+export CDP_SOUND_EXT=wav
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+export JAVA_15_HOME=$(/usr/libexec/java_home -v15)
+
+alias java15='export JAVA_HOME=$JAVA_15_HOME'
+
+java15
+
 

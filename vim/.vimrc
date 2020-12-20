@@ -1,4 +1,4 @@
-
+set autochdir
 set smartindent
 set tabstop=4
 set shiftwidth=4
@@ -9,6 +9,16 @@ set encoding=utf-8
 set listchars=tab:▸\ ,eol:¬
 set list
 set number
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-test/vim-test'
+
+Plug 'rust-lang/rust.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " jj is the new esc
 :imap jj <Esc>
