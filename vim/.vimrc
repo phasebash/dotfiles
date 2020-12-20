@@ -1,14 +1,3 @@
-set autochdir
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-syntax on
-set encoding=utf-8
-set listchars=tab:▸\ ,eol:¬
-set list
-set number
 
 call plug#begin('~/.vim/plugged')
 
@@ -23,7 +12,30 @@ call plug#begin()
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
     Plug 'tpope/vim-fugitive'
+    Plug 'scrooloose/syntastic'
 call plug#end()
+
+syntax enable
+filetype plugin indent on
+
+"in makefiles, don't expand tabs to spaces, since actual tab characters are
+"needed, and have indentation at 8 chars to be sure that all indents are tabs
+"(despite the mappings later):
+autocmd FileType make     set noexpandtab shiftwidth=8
+autocmd FileType automake set noexpandtab shiftwidth=8
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+
+set autochdir
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+syntax on
+set encoding=utf-8
+set listchars=tab:▸\ ,eol:¬
+set list
+set number
 
 if executable('rls')
     au User lsp_setup call lsp#register_server({
@@ -33,20 +45,22 @@ if executable('rls')
         \ })
 endif
 
+let g:rustfmt_autosave = 1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" https://vimawesome.com/plugin/syntastic#settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 " jj is the new esc
 :imap jj <Esc>
 
 colorscheme elflord
 
-" Enable file type detection
-filetype on
-
-"in makefiles, don't expand tabs to spaces, since actual tab characters are
-"needed, and have indentation at 8 chars to be sure that all indents are tabs
-"(despite the mappings later):
-autocmd FileType make     set noexpandtab shiftwidth=8
-autocmd FileType automake set noexpandtab shiftwidth=8
-autocmd FileType javascript setlocal ts=2 sts=2 sw=2
 
 nmap <silent> ,t :TestNearest<CR>
 nmap <silent> ,T :TestFile<CR>
