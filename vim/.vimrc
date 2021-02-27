@@ -6,6 +6,10 @@ call plug#begin()
     Plug 'w0rp/ale'
     Plug 'vim-test/vim-test'
 
+    " elixir
+    Plug 'slashmili/alchemist.vim'"
+    Plug 'elixir-editors/vim-elixir'
+
     Plug 'rust-lang/rust.vim'
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/vim-lsp'
@@ -20,7 +24,6 @@ call plug#end()
 
 syntax enable
 filetype plugin indent on
-set omnifunc=syntaxcomplete#Complete
 
 "in makefiles, don't expand tabs to spaces, since actual tab characters are
 "needed, and have indentation at 8 chars to be sure that all indents are tabs
@@ -50,13 +53,10 @@ if executable('rls')
         \ })
 endif
 
-let g:rustfmt_autosave = 1
-
 " jj is the new esc
 :imap jj <Esc>
 
 colorscheme elflord
-
 
 nmap <silent> ,t :TestNearest<CR>
 nmap <silent> ,T :TestFile<CR>
@@ -69,9 +69,15 @@ nmap <silent> ,s :lclose<CR>
 nmap <leader>g :NERDTreeToggle<CR>
 nmap <leader>G :NERDTreeFind<CR>
 
+let g:rustfmt_autosave = 1
 
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
+
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
+"set omnifunc=ale#completion#OmniFunc
+set omnifunc=syntaxcomplete#Complete
 
 augroup Racer
     autocmd!
