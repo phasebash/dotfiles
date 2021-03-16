@@ -4,8 +4,7 @@ set encoding=utf-8
 set nobackup
 set nowritebackup
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+" Longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays
 set updatetime=300
 
 " Don't pass messages to |ins-completion-menu|.
@@ -43,10 +42,14 @@ set listchars=tab:▸\ ,eol:¬
 set list
 set number
 
+autocmd InsertLeave * write
+
 " jj is the new esc
 :imap jj <Esc>
 
 colorscheme elflord
+highlight Pmenu guibg=brown gui=bold
+highlight CocFloating ctermbg=7
 
 nmap <silent> ,t :TestNearest<CR>
 nmap <silent> ,T :TestFile<CR>
@@ -60,11 +63,10 @@ nmap <leader>g :NERDTreeToggle<CR>
 nmap <leader>G :NERDTreeFind<CR>
 
 let g:rustfmt_autosave = 1
+let g:mix_format_on_save = 1
+let g:mix_format_silent_errors = 1
 
-let g:ale_completion_enabled = 1
-let g:ale_completion_autoimport = 1
-set omnifunc=ale#completion#OmniFunc
-"set omnifunc=syntaxcomplete#Complete
+set omnifunc=syntaxcomplete#Complete
 
 " =====================================================
 "
@@ -116,14 +118,6 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-"augroup mygroup
-"  autocmd!
-  " Setup formatexpr specified filetype(s).
-"  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-"  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-"augroup end
-
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -134,15 +128,26 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
 " Remap <C-f> and <C-b> for scroll float windows/popups.
-"if has('nvim-0.4.0') || has('patch-8.2.0750')
-"  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-"  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-"  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-"  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-"  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"endif
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -171,9 +176,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 call plug#begin('~/.vim/plugged')
 
 call plug#begin()
-    " auto complete
-    Plug 'w0rp/ale'
-
     " file management
     Plug 'preservim/nerdtree'
 
@@ -181,8 +183,8 @@ call plug#begin()
     Plug 'vim-test/vim-test'
 
     " elixir
-    Plug 'slashmili/alchemist.vim'"
     Plug 'elixir-editors/vim-elixir'
+    Plug 'mhinz/vim-mix-format'
 
     " rust
     Plug 'rust-lang/rust.vim'
@@ -194,6 +196,7 @@ call plug#begin()
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neoclide/coc-tsserver'
     Plug 'neoclide/coc-rls'
+    Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
     " needs
     " :CocInstall coc-rls
     " rustup component add rls rust-analysis rust-src
