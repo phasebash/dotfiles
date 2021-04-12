@@ -1,3 +1,4 @@
+
 set encoding=utf-8
 
 " Some servers have issues with backup files, see #649.
@@ -10,15 +11,6 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
 syntax enable
 filetype plugin indent on
 
@@ -30,7 +22,7 @@ autocmd FileType automake set noexpandtab shiftwidth=8
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2
 autocmd FileType typescript setlocal ts=2 sts=2 sw=2
 
-set autochdir
+"set autochdir
 set smartindent
 set tabstop=4
 set shiftwidth=4
@@ -42,15 +34,20 @@ set listchars=tab:▸\ ,eol:¬
 set list
 set number
 
-autocmd InsertLeave * write
+set mouse=a
+set mousemodel=popup_setpos
 
 " jj is the new esc
 :imap jj <Esc>
 
 colorscheme elflord
-highlight Pmenu guibg=brown gui=bold
-highlight CocFloating ctermbg=7
+"highlight Pmenu guibg=brown gui=bold
+"highlight CocFloating ctermbg=7
+"
+" reload vim config
+nnoremap confr :source $MYVIMRC<CR>
 
+" vim test
 nmap <silent> ,t :TestNearest<CR>
 nmap <silent> ,T :TestFile<CR>
 nmap <silent> ,a :TestSuite<CR>
@@ -59,145 +56,80 @@ nmap <silent> ,g :TestVisit<CR>
 
 nmap <silent> ,s :lclose<CR>
 
+" nerd tree
 nmap <leader>g :NERDTreeToggle<CR>
 nmap <leader>G :NERDTreeFind<CR>
 
+" on save hooks
+autocmd InsertLeave * write
 let g:rustfmt_autosave = 1
 let g:mix_format_on_save = 1
 let g:mix_format_silent_errors = 1
 
-set omnifunc=syntaxcomplete#Complete
+" auto complete on
+"set omnifunc=syntaxcomplete#Complete
 
-" =====================================================
-"
-" COC settings from https://github.com/neoclide/coc.nvim
-" 
-" =====================================================
+" vim-ale
+let g:ale_open_list = 1                 " show errors in window
+let g:ale_keep_list_window_open = 0     " keep the windows open
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+let g:ale_set_highlights = 1
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
+let g:ale_fix_on_save = 1
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+let g:ale_linters = {}
+let g:ale_linters.scss = ['stylelint']
+let g:ale_linters.css = ['stylelint']
+let g:ale_linters.elixir = ['elixir-ls', 'credo']
+let g:ale_linters.ruby = ['rubocop', 'ruby', 'solargraph']
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_fixers.javascript = ['eslint', 'prettier']
+let g:ale_fixers.html = ['prettier']
+let g:ale_fixers.scss = ['stylelint']
+let g:ale_fixers.css = ['stylelint']
+let g:ale_fixers.elm = ['format']
+let g:ale_fixers.ruby = ['rubocop']
+let g:ale_ruby_rubocop_executable = 'bundle'
+let g:ale_fixers.elixir = ['mix_format']
+let g:ale_fixers.xml = ['xmllint']
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+let g:ale_sign_column_always = 1
+let g:ale_elixir_credo_strict = 1
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+" https://www.mitchellhanberg.com/post/2018/10/18/how-to-use-elixir-ls-with-vim/
+let g:ale_elixir_elixir_ls_release = expand("~/workspace/github/elixir-ls/rel")
+let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:true}}
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <silent> ,h :ALEHover<CR>
+nmap <silent> gd :ALEGoToDefinition<CR>
+nmap <silent> gr :ALEFindReferences<CR>
+nmap <silent> ]g :ALENext<CR>
+nmap <silent> [g :ALEPrevious<CR>
+"nmap <leader> rn :ALERename<CR>
+nmap <silent> ,r :ALERename<CR>
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
-
-" Mappings for CoCList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-" =====================================================
-"
-" /COC
-"
-" =====================================================
 
 call plug#begin('~/.vim/plugged')
+" file management
+Plug 'preservim/nerdtree'
 
-call plug#begin()
-    " file management
-    Plug 'preservim/nerdtree'
+"test support"
+Plug 'vim-test/vim-test'
 
-    "test support"
-    Plug 'vim-test/vim-test'
+" elixir
+Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 
-    " elixir
-    Plug 'elixir-editors/vim-elixir'
-    Plug 'mhinz/vim-mix-format'
+" rust
+Plug 'rust-lang/rust.vim'
 
-    " rust
-    Plug 'rust-lang/rust.vim'
+" git
+Plug 'tpope/vim-fugitive'
 
-    " git
-    Plug 'tpope/vim-fugitive'
-
-    " extended language support
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'neoclide/coc-tsserver'
-    Plug 'neoclide/coc-rls'
-    Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
-    " needs
-    " :CocInstall coc-rls
-    " rustup component add rls rust-analysis rust-src
+" extended language support
+Plug 'dense-analysis/ale'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()

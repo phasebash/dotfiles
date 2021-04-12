@@ -1,5 +1,4 @@
-autoload -Uz compinit && compinit
-
+autoload -Uz compinit && compinit 
 # partial completion suggestions
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
@@ -12,6 +11,8 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:$HOME/local/bin"
 
 export CDP_SOUND_EXT=wav
+export EDITOR=vim
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
