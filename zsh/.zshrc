@@ -10,7 +10,7 @@ fpath=(~/.zsh $fpath)
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:$HOME/local/bin"
 
-. $HOME/.asdf/asdf.sh
+. $(brew --prefix asdf)/asdf.sh
 eval "$(direnv hook zsh)"
 
 export CDP_SOUND_EXT=wav
