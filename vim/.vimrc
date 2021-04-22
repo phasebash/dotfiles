@@ -71,7 +71,7 @@ let g:ale_set_highlights = 1
 set completeopt=menu,menuone,preview,noselect,noinsert
 let g:ale_completion_enabled = 1
 let g:ale_completion_autoimport = 1
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 let g:ale_linters = {}
 let g:ale_linters.scss = ['stylelint']
@@ -87,7 +87,7 @@ let g:ale_fixers.css = ['stylelint']
 let g:ale_fixers.elm = ['format']
 let g:ale_fixers.ruby = ['rubocop']
 let g:ale_ruby_rubocop_executable = 'bundle'
-let g:ale_fixers.elixir = ['mix_format']
+let g:ale_fixers.elixir = ['mix_format', 'credo']
 let g:ale_fixers.xml = ['xmllint']
 
 let g:ale_sign_column_always = 1
@@ -102,8 +102,13 @@ let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:true}}
 " =============
 
 " fzf fuzzy search installed from macports
-set rtp+=/usr/local/opt/fzf
-nmap <C-P> :FZF<CR>
+"set rtp+=/usr/local/opt/fzf
+"nmap <C-P> :FZF<CR>
+
+" fuzzy find
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+nmap <silent> <C-p> :Files<CR>
+nmap <silent> <C-t> :Rg<CR>
 
 " jj is the new esc
 :imap jj <Esc>
@@ -125,6 +130,10 @@ nmap <silent> ,s :lclose<CR>
 nmap <leader>g :NERDTreeToggle<CR>
 nmap <leader>G :NERDTreeFind<CR>
 
+" mix format"
+let g:mix_format_on_save = 1
+let g:mix_format_silent_errors = 1
+
 " ALE
 nmap <silent> ,h :ALEHover<CR>
 nmap <silent> ,d :ALEGoToDefinition<CR>
@@ -138,11 +147,16 @@ call plug#begin('~/.vim/plugged')
 " file management
 Plug 'preservim/nerdtree'
 
+" fuzzy find
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 "test support"
 Plug 'vim-test/vim-test'
 
 " elixir
 Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 
 " rust
 Plug 'rust-lang/rust.vim'
