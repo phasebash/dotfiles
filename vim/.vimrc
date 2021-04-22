@@ -4,7 +4,7 @@ set encoding=utf-8
 " Longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays
 set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
+" Don't pass cessages to |ins-completion-menu|.
 set shortmess+=c
 
 " sensible tab defaults
@@ -143,6 +143,8 @@ nmap <silent> ]g :ALENext<CR>
 nmap <silent> [g :ALEPrevious<CR>
 nmap <silent> ,r :ALERename<CR>
 
+nmap <silent> ,gh :GBrowse<CR>
+
 call plug#begin('~/.vim/plugged')
 " file management
 Plug 'preservim/nerdtree'
@@ -163,6 +165,9 @@ Plug 'rust-lang/rust.vim'
 
 " git
 Plug 'tpope/vim-fugitive'
+" github
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-commentary'
 
 " extended language support
 Plug 'dense-analysis/ale'
