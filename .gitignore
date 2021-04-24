@@ -1,3 +1,6 @@
 vim/.vim/plugged
 vim/plugged
 vim/autoload
+*.swp
+*.lock
+node_modules
