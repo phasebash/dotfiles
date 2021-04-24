@@ -57,6 +57,11 @@ autocmd InsertLeave * write
 "set omnifunc=syntaxcomplete#Complete
 
 " =============
+" tab page configuration
+" =============
+set showtabline=2
+
+" =============
 " plugin configurations
 " =============
 
@@ -64,7 +69,7 @@ autocmd InsertLeave * write
 let g:rustfmt_autosave = 1
 
 " vim-ale
-let g:ale_open_list = 1                 " show errors in window
+let g:ale_open_list = 0                 " show errors in window
 let g:ale_keep_list_window_open = 0     " keep the windows open
 
 let g:ale_set_highlights = 1
@@ -89,6 +94,7 @@ let g:ale_fixers.ruby = ['rubocop']
 let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_fixers.elixir = ['mix_format', 'credo']
 let g:ale_fixers.xml = ['xmllint']
+let g:ale_fixers.markdown = ['prettier']
 
 let g:ale_sign_column_always = 1
 let g:ale_elixir_credo_strict = 1
@@ -96,6 +102,11 @@ let g:ale_elixir_credo_strict = 1
 " https://www.mitchellhanberg.com/post/2018/10/18/how-to-use-elixir-ls-with-vim/
 let g:ale_elixir_elixir_ls_release = expand("~/workspace/github/elixir-ls/rel")
 let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:true}}
+
+
+" mix format"
+let g:mix_format_on_save = 1
+let g:mix_format_silent_errors = 1
 
 " =============
 " key bindings
@@ -130,10 +141,6 @@ nmap <silent> ,s :lclose<CR>
 nmap <leader>g :NERDTreeToggle<CR>
 nmap <leader>G :NERDTreeFind<CR>
 
-" mix format"
-let g:mix_format_on_save = 1
-let g:mix_format_silent_errors = 1
-
 " ALE
 nmap <silent> ,h :ALEHover<CR>
 nmap <silent> ,d :ALEGoToDefinition<CR>
@@ -141,7 +148,7 @@ nmap <silent> ,r :ALEFindReferences<CR>
 nmap <silent> ,f :ALEFix<cr>
 nmap <silent> ]g :ALENext<CR>
 nmap <silent> [g :ALEPrevious<CR>
-nmap <silent> ,r :ALERename<CR>
+nmap <silent> ,R :ALERename<CR>
 
 call plug#begin('~/.vim/plugged')
 " file management
